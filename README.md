@@ -56,3 +56,6 @@ I've been doing this since December 2025.
 - Postfix emails me on any failures, restarts or updates
 
 ---
+
+## References
+- [Setting up CouchDB for Obsidian LiveSync](https://pinggy.io/blog/self_hosting_obsidian/)
