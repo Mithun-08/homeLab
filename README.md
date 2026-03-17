@@ -61,6 +61,7 @@ I've been doing this since December 2025.
 - [Setting up Cloudflare tunnel](https://youtu.be/ey4u7OUAF3c)
 - [Setting up CouchDB for Obsidian LiveSync](https://pinggy.io/blog/self_hosting_obsidian/)
 - [Forked Wordle - removed cooldown - made docker image](https://github.com/Mithun-08/react-wordle)
+- [Setting up Postfix](https://www.youtube.com/watch?v=uNss377DK88&t=426s&pp=ygUScG9zdGZpeCBob21lc2VydmVy)
 
 ---
 
