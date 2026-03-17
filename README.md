@@ -10,8 +10,7 @@ which was already eaten up by WhatsApp backups alone.
 
 I've been doing this since December 2025. Got an ASUS Intel N150 mini 
 PC — 16GB RAM, 128GB SSD — for around ₹20,000, runs headless. Storage 
-is an HDD salvaged from my old laptop. I'm a CSE student and this is 
-my playground.
+is an HDD salvaged from my old laptop.
 
 ---
 
