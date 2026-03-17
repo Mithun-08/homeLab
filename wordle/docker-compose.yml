@@ -1,0 +1,16 @@
+version: "2.4"
+
+services:
+
+  wordle:
+    image: imithun/wordle:latest
+    container_name: Wordle
+    ports:
+      - 4111:8080
+    networks:
+      - default      # Keeps its internal database connection
+      - kuma_network # To monitor through uptime-kuma
+
+networks:
+  kuma_network:
+    external: true

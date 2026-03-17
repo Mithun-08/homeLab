@@ -1,0 +1,28 @@
+version: "3"
+services:
+  watchtower:
+    image: nickfedor/watchtower:latest
+    container_name: watchtower
+    restart: unless-stopped
+    ports:
+      - "8099:8080" # Uncomment if you're using Prometheus/Grafana
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - default      # Keeps its internal database connection
+      - kuma_network # To monitor through uptime-kuma
+    environment:
+      - TZ=Asia/Kolkata
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_SCHEDULE=0 0 4 * * *
+      - WATCHTOWER_METRICS_ENABLED=true
+      - WATCHTOWER_HTTP_API_TOKEN=${TOKEN}
+      - WATCHTOWER_HTTP_API_METRICS=true
+      - WATCHTOWER_NOTIFICATION_REPORT=true
+      - WATCHTOWER_NOTIFICATIONS=gotify
+      - WATCHTOWER_NOTIFICATION_GOTIFY_URL=http://172.17.0.1:8383
+      - WATCHTOWER_NOTIFICATION_GOTIFY_TOKEN=${GOTIFY_TOKEN}
+
+networks:
+  kuma_network:
+    external: true

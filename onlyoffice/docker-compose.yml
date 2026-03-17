@@ -1,0 +1,20 @@
+services:
+  onlyoffice-docs:
+    container_name: onlyoffice-docs
+    image: onlyoffice/documentserver:latest
+    restart: always
+    ports:
+      - "8000:80"
+    environment:
+      - JWT_ENABLED=true
+      - JWT_SECRET=your_strong_secret_here  # Change this to something unique
+      - ALLOW_PRIVATE_IP_ADDRESS=true       # Essential for local Nextcloud communication
+    volumes:
+      - ./onlyoffice_data:/var/www/onlyoffice/Data
+      - ./onlyoffice_logs:/var/log/onlyoffice
+    networks:
+      - default      # Keeps its internal database connection
+      - kuma_network # To monitor through uptime-kuma
+networks:
+  kuma_network:
+    external: true

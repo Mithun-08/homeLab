@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  couchdb:
+    image: couchdb:latest
+    container_name: couchdb-for-ols
+    environment:
+      - COUCHDB_USER=${user}
+      - COUCHDB_PASSWORD=${passwd}
+    volumes:
+      - ./couchdb-data:/opt/couchdb/data
+      - ./couchdb-etc:/opt/couchdb/etc/local.d
+    ports:
+      - 5984:5984
+    restart: unless-stopped
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
+    networks:
+      - obsidian-network
+      - kuma_network # To monitor through uptime-kuma
+
+volumes:
+  couchdb-data:
+  couchdb-config:
+
+networks:
+  obsidian-network:
+    driver: bridge
+  kuma_network:
+    external: true

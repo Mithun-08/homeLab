@@ -1,0 +1,14 @@
+services:
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflare-tunnel
+    restart: unless-stopped
+    command:
+      - tunnel
+      - --no-autoupdate
+      - run
+      - --token
+      - ${TUNNEL_TOKEN} 
+    environment:
+      - TUNNEL_TRANSPORT_PROTOCOL=http2
+      - TUNNEL_EDGE_IP_VERSION=4

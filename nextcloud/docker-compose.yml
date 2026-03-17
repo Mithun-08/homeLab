@@ -1,0 +1,47 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=nextcloud
+      - POSTGRES_USER=nextcloud
+      - POSTGRES_PASSWORD=your_password
+
+  redis:
+    image: redis:alpine
+    restart: always
+
+  app:
+    image: nextcloud:latest
+    container_name: nextcloud
+    restart: always
+    ports:
+      - 8080:80
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - nextcloud_config:/var/www/html
+      - /mnt/data/nextcloud:/var/www/html/data
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_DB=nextcloud
+      - POSTGRES_USER=nextcloud
+      - POSTGRES_PASSWORD=your_password(same as above)
+      - REDIS_HOST=redis
+      - NEXTCLOUD_TRUSTED_DOMAINS=localhost your_local_ip cloud.yourdomain.com
+      - TRUSTED_PROXIES=172.16.0.0/12 192.168.0.0/16 10.0.0.0/8
+      - NC_default_phone_region=IN
+    networks:
+      - default      # Keeps its internal database connection
+      - kuma_network # To monitor through uptime-kuma
+
+volumes:
+  nextcloud_config:
+  db_data:
+
+networks:
+  kuma_network:
+    external: true

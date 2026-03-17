@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  homeassistant:
+    container_name: homeassistant
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    volumes:
+      - ./config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+
+  vscode:
+    container_name: vscode
+    image: codercom/code-server:latest
+    user: "1000:1000"
+    volumes:
+      - ./:/home/coder/project
+      - ./vscode-data:/home/coder/.local/share/code-server
+    ports:
+      - "8443:8080"
+    command: code-server --auth none --disable-telemetry /home/coder/project/config
+    restart: unless-stopped
+    networks:
+      - default      # Keeps its internal database connection
+      - kuma_network # To monitor through uptime-kuma
+
+  esphome:
+    container_name: esphome
+    image: esphome/esphome
+    network_mode: host
+    volumes:
+      - ./esphome-config:/config
+      - /etc/localtime:/etc/localtime:ro
+    restart: always
+
+networks:
+  kuma_network:
+    external: true

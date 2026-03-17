@@ -1,0 +1,26 @@
+services:
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:lts
+    restart: always
+    security_opt:
+      - no-new-privileges:true  # Extra security layer
+    volumes:
+      - /etc/localtime:/etc/localtime:ro # Syncs server time to Portainer
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./portainer_data:/data
+    ports:
+      - 9443:9000
+    networks:
+      - portainer_network
+      - kuma_network      # To monitor through uptime-kuma
+
+volumes:
+  portainer_data:
+    name: portainer_data
+
+networks:
+  portainer_network:
+    name: portainer_network
+  kuma_network:
+    external: true

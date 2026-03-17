@@ -1,0 +1,12 @@
+services:
+  gotify:
+    image: gotify/server:latest
+    container_name: gotify
+    restart: always
+    ports:
+      - "8383:80"  # Access the UI via http://your-ip:8383
+    environment:
+      - GOTIFY_DEFAULTUSER_PASS=admin # Change this after first login!
+      - TZ=Asia/Kolkata
+    volumes:
+      - "./data:/app/data"

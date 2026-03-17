@@ -1,0 +1,50 @@
+services:
+  beszel:
+    image: henrygd/beszel:latest
+    container_name: beszel
+    restart: unless-stopped
+    environment:
+      - APP_URL=https://beszel.mithn.in
+    ports:
+      - 8090:8090
+    volumes:
+      - ./beszel_data:/beszel_data
+      - ./beszel_socket:/beszel_socket
+      - /etc/ssl/certs:/etc/ssl/certs:ro
+    networks:
+      - default      # Keeps its internal database connection
+      - kuma_network # To monitor through uptime-kuma
+    extra_hosts:
+      - "nimbus:host-gateway"
+
+  beszel-agent:
+    image: henrygd/beszel-agent-intel:latest
+    container_name: beszel-agent
+    restart: unless-stopped
+    network_mode: host
+    privileged: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./beszel_agent_data:/var/lib/beszel-agent
+      - /mnt/data:/extra-filesystems/HDD1:ro
+      # monitor other disks / partitions by mounting a folder in /extra-filesystems
+      # - /mnt/disk/.beszel:/extra-filesystems/sda1:ro
+    devices:
+      # 2. DEVICE FOR S.M.A.R.T. (Shows Health/Temp)
+      # Pass the base device 'sda', not the partition 'sda1'
+      - /dev/sda:/dev/sda
+      - /dev/dri:/dev/dri
+    cap_add:
+      - SYS_RAWIO
+      - SYS_ADMIN
+      - CAP_PERFMON
+    environment:
+      LISTEN: 45876
+      KEY: 'your_beszel_agent_key_here'
+      TOKEN: your_beszel_token_here
+      HUB_URL: http://localhost:8090
+      SMART_DEVICES: /dev/sda:sat
+
+networks:
+  kuma_network:
+    external: true
