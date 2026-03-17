@@ -59,3 +59,4 @@ I've been doing this since December 2025.
 
 ## References
 - [Setting up CouchDB for Obsidian LiveSync](https://pinggy.io/blog/self_hosting_obsidian/)
+- [Forked Wordle - removed cooldown - made docker image](https://github.com/Mithun-08/react-wordle)
