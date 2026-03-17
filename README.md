@@ -20,7 +20,7 @@ I've been doing this since December 2025.
 - **Storage**: Salvaged HDD from old laptop
 - **Running**: Headless, 24/7
 
-<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/db33b9a7-4384-49bb-9599-009d189ab494" />
+<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/207c2269-2665-4e03-b9be-e9143c3537b3" />
 
 ---
 
