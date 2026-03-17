@@ -35,14 +35,14 @@ is an HDD salvaged from my old laptop.
 | **Home Assistant** | Smart home automation |
 | **CouchDB** | Obsidian Vault synchronized in the cloud |
 | **Beszel** | Resource monitoring for the server and containers |
-| **Uptime Kuma** | Monitors all services and alerts on downtime |
+| **[Uptime Kuma](https://status.mithn.in/)** | Monitors all services and alerts on downtime |
 | **Portainer** | Docker management UI |
 | **Watchtower** | Auto-updates all containers |
 | **Gotify** | Self-hosted push notifications |
 | **Cloudflared** | Cloudflare Tunnel — everything is HTTPS, zero open ports to escape CGNAT |
 | **Postfix** | Self-hosted mail server — emails me on failures, restarts or updates |
-| **Wordle** | Forked and self-hosted with the cooldown removed |
-| **BentoPDF** | PDF tools |
+| **[Wordle](https://wordly.mithn.in/)** | Forked and self-hosted with the cooldown removed |
+| **[BentoPDF](https://pdf.mithn.in/)** | PDF tools |
 
 ---
 
