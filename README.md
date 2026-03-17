@@ -1,4 +1,4 @@
-# Nimbus(My Server)
+# Nimbus (HomeServer)
 
 I first started self-hosting hoping to get an ad blocker on my home 
 Wi-Fi to block YouTube ads on the TV — but after digging in, I found 
