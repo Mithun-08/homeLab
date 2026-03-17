@@ -20,6 +20,8 @@ I've been doing this since December 2025.
 - **Storage**: Salvaged HDD from old laptop
 - **Running**: Headless, 24/7
 
+<img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/7bb10246-5dac-4b2b-88e0-18ecd9affce6" />
+
 ---
 
 ## Services
