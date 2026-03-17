@@ -19,8 +19,7 @@ I've been doing this since December 2025.
 - **OS Drive**: 128GB SSD
 - **Storage**: Salvaged HDD from old laptop
 - **Running**: Headless, 24/7
-
-[BuyLink (For India)](https://nationalpc.in/pre-built-mini-pc/asus-nuc14-essential-kit-nuc14mnk-b-n150-processor-16gb-ddr5-laptop-ram-128gb-m-2-nvme-ssd-windows-11pro)
+- [BuyLink(ForIndia)](https://nationalpc.in/pre-built-mini-pc/asus-nuc14-essential-kit-nuc14mnk-b-n150-processor-16gb-ddr5-laptop-ram-128gb-m-2-nvme-ssd-windows-11pro)
 
 <img width="1920" height="1200" alt="image" src="https://github.com/user-attachments/assets/207c2269-2665-4e03-b9be-e9143c3537b3" />
 
