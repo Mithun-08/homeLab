@@ -65,3 +65,36 @@ I've been doing this since December 2025.
 
 ---
 
+## Learned the Hard Way
+
+**Proxmox vs Ubuntu Server**
+Started setting up Proxmox but found out halfway through that it 
+cannot recognise the Intel N150's integrated GPU. Since I needed GPU 
+hardware acceleration for media transcoding, I switched to Ubuntu Server.
+
+**Own Domain vs Tailscale**
+Having your own domain makes it much easier to publicly access and 
+navigate your services. Without a domain you can still access services 
+from anywhere using Tailscale's Magic DNS, but the client device needs 
+to stay connected to the Tailscale network.
+
+**Indian ISPs and CGNAT**
+Indian ISPs are behind CGNAT, meaning your router doesn't have its own 
+public IP — so you can't expose ports to host services publicly. This 
+is where Cloudflare Tunnel comes in. It creates a secure tunnel between 
+your server and Cloudflare without exposing any ports, letting you 
+access your services from anywhere.
+
+**Pihole + Airtel**
+Hosting Pihole is effectively useless with Airtel as your ISP. Most 
+router settings are greyed out and customer support was no help. Without 
+the ability to change the DNS provider to Pihole, you have to manually 
+point each device to use it as its DNS — which defeats the purpose.
+
+**Nextcloud + OnlyOffice**
+Just running Nextcloud isn't enough. Without an office suite you still 
+have to download, edit and re-upload documents. OnlyOffice lets you open 
+and save files directly in the browser — no hassle.
+
+---
+
