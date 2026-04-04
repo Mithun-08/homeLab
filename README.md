@@ -31,6 +31,8 @@ I've been doing this since December 2025.
 |---|---|
 | **Nextcloud** | Self hosted Google Drive, without the 15GB limit |
 | **OnlyOffice** | Open, edit and save files in the browser — no downloading, editing and re-uploading |
+| **Jellyfin** | Self hosted OTT plartform, no quality cap |
+| **arr Stack** | Automates content acquisition for Jellyfin |
 | **Immich** | Google Photos replacement |
 | **Pihole** | Ad Blocker |
 | **Home Assistant** | Smart home automation |
