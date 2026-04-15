@@ -139,6 +139,8 @@ services:
     image: lscr.io/linuxserver/jellyfin:latest
     container_name: jellyfin
     restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     devices:
       - /dev/dri/renderD128:/dev/dri/renderD128
       - /dev/dri/card0:/dev/dri/card0
@@ -157,3 +159,106 @@ services:
     networks:
       servarrnetwork:
         ipv4_address: 172.39.0.9
+
+# ==========================================
+  # Dispatcharr Integrated Services (Fixed)
+  # ==========================================
+  dispatcharr-web:
+    image: ghcr.io/dispatcharr/dispatcharr:latest
+    container_name: dispatcharr-web
+    restart: unless-stopped
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    ports:
+      - 9191:9191
+    volumes:
+      - ./dispatcharr_data:/data
+    depends_on:
+      dispatcharr-db:
+        condition: service_healthy
+      dispatcharr-redis:
+        condition: service_healthy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - DISPATCHARR_ENV=modular
+      - POSTGRES_HOST=dispatcharr-db
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=dispatcharr
+      - POSTGRES_USER=dispatch
+      - POSTGRES_PASSWORD=secret
+      - REDIS_HOST=dispatcharr-redis
+      - REDIS_PORT=6379
+      - DISPATCHARR_LOG_LEVEL=info
+      - TZ=${TZ}
+    networks:
+      servarrnetwork:
+        ipv4_address: 172.39.0.10
+
+  dispatcharr-celery:
+    image: ghcr.io/dispatcharr/dispatcharr:latest
+    container_name: dispatcharr-celery
+    restart: unless-stopped
+    depends_on:
+      dispatcharr-db:
+        condition: service_healthy
+      dispatcharr-redis:
+        condition: service_healthy
+      dispatcharr-web:
+        condition: service_started
+    volumes:
+      - ./dispatcharr_data:/data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    entrypoint: ["/app/docker/entrypoint.celery.sh"]
+    environment:
+      - DISPATCHARR_ENV=modular
+      - DISPATCHARR_PORT=9191
+      - POSTGRES_HOST=dispatcharr-db
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=dispatcharr
+      - POSTGRES_USER=dispatch
+      - POSTGRES_PASSWORD=secret
+      - REDIS_HOST=dispatcharr-redis
+      - REDIS_PORT=6379
+      - DISPATCHARR_LOG_LEVEL=info
+      - DJANGO_SETTINGS_MODULE=dispatcharr.settings
+      - PYTHONUNBUFFERED=1
+      - TZ=${TZ}
+    networks:
+      servarrnetwork:
+    
+  dispatcharr-db:
+    image: postgres:17
+    container_name: dispatcharr-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=dispatcharr
+      - POSTGRES_USER=dispatch
+      - POSTGRES_PASSWORD=secret
+      - TZ=${TZ}
+    volumes:
+      - dispatcharr_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dispatch -d dispatcharr"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      servarrnetwork:
+
+  dispatcharr-redis:
+    image: redis:latest
+    container_name: dispatcharr-redis
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      servarrnetwork:
+
+volumes:
+  dispatcharr_postgres_data:
