@@ -1,9 +1,6 @@
 networks:
   servarrnetwork:
     name: servarrnetwork
-    ipam:
-      config:
-        - subnet: 172.39.0.0/24
 
 services:
   qbittorrent:
@@ -25,8 +22,7 @@ services:
       - 6881:6881
       - 6881:6881/udp
     networks:
-      servarrnetwork:
-        ipv4_address: 172.39.0.2
+      - servarrnetwork
 
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
@@ -44,8 +40,7 @@ services:
       - 9696:9696
     restart: unless-stopped
     networks:
-      servarrnetwork:
-        ipv4_address: 172.39.0.3
+      - servarrnetwork
 
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
@@ -59,8 +54,7 @@ services:
       - 8191:8191
     restart: unless-stopped
     networks:
-      servarrnetwork:
-        ipv4_address: 172.39.0.4
+      - servarrnetwork
 
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
@@ -77,8 +71,7 @@ services:
     ports:
       - 8989:8989
     networks:
-      servarrnetwork:
-        ipv4_address: 172.39.0.5
+      - servarrnetwork
 
   radarr:
     image: lscr.io/linuxserver/radarr:latest
@@ -95,8 +88,7 @@ services:
     ports:
       - 7878:7878
     networks:
-      servarrnetwork:
-        ipv4_address: 172.39.0.6
+      - servarrnetwork
 
   seerr:
     container_name: seerr
@@ -115,7 +107,9 @@ services:
     volumes:
       - ./seerr:/app/config
     ports:
-      - 5055:5055    
+      - 5055:5055
+    networks:
+      - servarrnetwork
 
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
@@ -132,8 +126,7 @@ services:
     ports:
       - 6767:6767
     networks:
-      servarrnetwork:
-        ipv4_address: 172.39.0.8
+      - servarrnetwork
 
   jellyfin:
     image: lscr.io/linuxserver/jellyfin:latest
@@ -157,12 +150,8 @@ services:
     ports:
       - 8096:8096
     networks:
-      servarrnetwork:
-        ipv4_address: 172.39.0.9
+      - servarrnetwork
 
-# ==========================================
-  # Dispatcharr Integrated Services (Fixed)
-  # ==========================================
   dispatcharr-web:
     image: ghcr.io/dispatcharr/dispatcharr:latest
     container_name: dispatcharr-web
@@ -193,8 +182,7 @@ services:
       - DISPATCHARR_LOG_LEVEL=info
       - TZ=${TZ}
     networks:
-      servarrnetwork:
-        ipv4_address: 172.39.0.10
+      - servarrnetwork
 
   dispatcharr-celery:
     image: ghcr.io/dispatcharr/dispatcharr:latest
@@ -227,8 +215,8 @@ services:
       - PYTHONUNBUFFERED=1
       - TZ=${TZ}
     networks:
-      servarrnetwork:
-    
+      - servarrnetwork
+
   dispatcharr-db:
     image: postgres:17
     container_name: dispatcharr-db
@@ -246,7 +234,7 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      servarrnetwork:
+      - servarrnetwork
 
   dispatcharr-redis:
     image: redis:latest
@@ -258,7 +246,7 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      servarrnetwork:
+      - servarrnetwork
 
 volumes:
   dispatcharr_postgres_data:
