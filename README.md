@@ -34,6 +34,7 @@ I've been doing this since December 2025.
 | **Jellyfin** | Self hosted OTT plartform, no quality cap |
 | **arr Stack** | Automates content acquisition for Jellyfin |
 | **Immich** | Google Photos replacement |
+| **Speedtest-tracker** | Monitor System's Network Speed |
 | **Pihole** | Ad Blocker |
 | **Home Assistant** | Smart home automation |
 | **CouchDB** | Obsidian Vault synchronized in the cloud |
