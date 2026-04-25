@@ -3,6 +3,32 @@ networks:
     name: servarrnetwork
 
 services:
+  protonvpn:
+    image: qmcgaw/gluetun
+    container_name: protonvpn
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      - VPN_SERVICE_PROVIDER=protonvpn
+      - VPN_TYPE=openvpn
+      - FREE_ONLY=on
+      - SERVER_COUNTRIES=Japan
+      - HEALTH_VPN_EXPECTED_STATUS=healthy
+      - DOT=off
+      - TZ=Asia/Kolkata
+      - FIREWALL_OUTBOUND_SUBNETS=172.16.0.0/12,192.168.0.0/16
+    env_file:
+      - .env
+    volumes:
+      - ./gluetun:/gluetun
+    ports:
+      - 5055:5055
+    restart: unless-stopped
+    networks:
+      - servarrnetwork
+
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
     container_name: qbittorrent
@@ -94,11 +120,11 @@ services:
     container_name: seerr
     image: ghcr.io/seerr-team/seerr:latest
     restart: unless-stopped
+    network_mode: "container:protonvpn"
+    depends_on:
+      - protonvpn
     user: "${PUID}:${PGID}"
     init: true
-    dns:
-      - 1.1.1.1
-      - 8.8.8.8
     environment:
       - LOG_LEVEL=debug
       - PUID=${PUID}
@@ -106,10 +132,6 @@ services:
       - TZ=${TZ}
     volumes:
       - ./seerr:/app/config
-    ports:
-      - 5055:5055
-    networks:
-      - servarrnetwork
 
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
