@@ -18,7 +18,8 @@ services:
       - HEALTH_VPN_EXPECTED_STATUS=healthy
       - DOT=off
       - TZ=Asia/Kolkata
-      - FIREWALL_OUTBOUND_SUBNETS=172.16.0.0/12,192.168.0.0/16
+      - DNS=1.1.1.1
+      - FIREWALL_OUTBOUND_SUBNETS=172.16.0.0/12,192.168.0.0/16,172.29.0.0/16
     env_file:
       - .env
     volumes:
